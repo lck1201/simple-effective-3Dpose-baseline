@@ -26,14 +26,15 @@ And, you can modify configurations(like GPU) in config.py.
 
 **Train**: python train.py </br>
 
+
 **Test**:  python test.py /path/to/model </br>
-#TODO: provide trained model 
+- [ ] Todo:Provide trained model </br>
 
 ## Results
 Since I don't have 2D pose estimate results on HM3.6M, I just experiment with 2D ground truth as input.
 My best result is **46.2mm**(no augment is used), slightly higher than 45.5mm reported by paper.</br>
 
-![Protocol1_Joint_Error](https://github.com/JimmySuen/Pose2DTo3D/blob/master/Baseline/doc/Protocol1_Action_error.png)
+![Protocol1_Joint_Error](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Protocol1_Action_error.png)
 
 ![Figure1](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure1.png)
 
