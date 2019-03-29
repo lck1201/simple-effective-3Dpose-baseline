@@ -13,14 +13,15 @@ from lib.net_module import *
 from lib.utils import *
 from lib.dataset.hm36 import hm36
 
-from config import config, gen_config
+from config import config, gen_config, update_config_from_args, s_args
+config = update_config_from_args(config, s_args)
 
 def main():
     # Parse config and mkdir output
     logger, final_Model_path = create_logger(config)
     config.final_Model_path = final_Model_path
     gen_config(os.path.join(final_Model_path, 'hyperParams.yaml'))
-    logger.info('\nTraining config:{}\n'.format(pprint.pformat(config)))
+    logger.info('Training config:{}\n'.format(pprint.pformat(config)))
 
     # define context
     if config.useGPU:

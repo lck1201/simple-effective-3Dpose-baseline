@@ -12,24 +12,24 @@ from lib.utils import *
 from lib.dataset.hm36 import hm36, HM_act_idx
 from lib.net_module import TestNet
 
-from config import config, update_config, gen_config
+from config import config, update_config, gen_config, s_args
 
-def main(model_path):
+def main():
     # Parse config and mkdir output
-    if not os.path.exists(model_path):
+    if not os.path.exists(s_args.model):
         print("Model doesn't exist!!!")
 
-    yamlPath = os.path.join(os.path.dirname(model_path), 'hyperParams.yaml')
+    yamlPath = os.path.join(os.path.dirname(s_args.model), 'hyperParams.yaml')
     if os.path.exists(yamlPath):
         update_config(yamlPath)
     else:
         gen_config(yamlPath)
-    test_log_path = os.path.splitext(model_path)[0] + ('_protocol#1.log' if not config.TEST.isPA else '_protocol#2.log')
+    test_log_path = os.path.splitext(s_args.model)[0] + ('_protocol#1.log' if not config.TEST.isPA else '_protocol#2.log')
     print(test_log_path)
 
     logger = LOG(test_log_path, config.DEBUG)
     logger.info('Training config:{}\n'.format(pprint.pformat(config)))
-    logger.info('Using Model',model_path)
+    logger.info('Using Model',s_args.model)
 
     # define context
     if config.useGPU:
@@ -40,7 +40,7 @@ def main(model_path):
 
     # network
     net = get_net(config)
-    net.collect_params().load(model_path, ctx=ctx)
+    net.collect_params().load(s_args.model, ctx=ctx)
 
     results = list()
     for act in HM_act_idx:
@@ -77,5 +77,4 @@ def main(model_path):
 
 
 if __name__ == '__main__':
-    args = sys.argv
-    main(args[1])
+    main()

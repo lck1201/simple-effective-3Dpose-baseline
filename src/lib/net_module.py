@@ -1,5 +1,3 @@
-import time
-
 from mxnet import autograd
 from mxnet import gluon
 from mxnet import ndarray as nd
@@ -15,15 +13,11 @@ def trainNet(net, trainer, train_data, loss, train_metric, epoch, config, logger
         train_metric.reset()
 
     trainloss, n = [0] * len(ctx), 0
-    RecordTime = {'load': 0, 'forward': 0, 'loss': 0, 'backward': 0, 'post': 0}
 
     for batch_i, batch in enumerate(train_data):
-        beginT = time.time()
         data_list = gluon.utils.split_and_load(batch.data[0], ctx_list=ctx, batch_axis=0)
         label_list = gluon.utils.split_and_load(batch.label[0], ctx_list=ctx, batch_axis=0)
-        RecordTime['load'] += time.time() - beginT
 
-        beginT = time.time()
         Ls = []
         output_list = []
         with autograd.record():
@@ -32,18 +26,12 @@ def trainNet(net, trainer, train_data, loss, train_metric, epoch, config, logger
                 L = loss(preds, y)
                 Ls.append(L)
                 output_list.append(preds)
-            RecordTime['forward'] += time.time() - beginT
 
-            beginT = time.time()
             for L in Ls:
                 L.backward()
-            RecordTime['loss'] += time.time() - beginT
 
-        beginT = time.time()
         trainer.step(batch.data[0].shape[0])
-        RecordTime['backward'] += time.time() - beginT
 
-        beginT = time.time()
         # Number
         n += batch.data[0].shape[0]
 
@@ -51,21 +39,9 @@ def trainNet(net, trainer, train_data, loss, train_metric, epoch, config, logger
         for i in range(len(trainloss)):
             trainloss[i] += Ls[i]
 
-        # MPJPE
-        if config.TRAIN.UseMetric:
-            for lb, pd in zip(label_list, output_list):
-                train_metric.update(lb, pd)
-        RecordTime['post'] += time.time() - beginT
-
-    totalT = nd.array([RecordTime[k] for k in RecordTime]).sum().asscalar()
-    for key in RecordTime:
-        print("%-s: %.1fs %.1f%% " % (key, RecordTime[key], RecordTime[key] / totalT * 100), end=" ")
-    print(" ")
-
     nd.waitall()
     trainloss = sum([item.sum().asscalar() for item in trainloss])
-    MPJPE = train_metric.get()[-1].sum(axis=0) / 17 if config.TRAIN.UseMetric else 0
-    logger.info("TRAIN - Epoch:%d LR:%.2e Loss:%.2e MPJPE:%.1f" % (epoch + 1, trainer.learning_rate, trainloss / n, MPJPE))
+    logger.info("TRAIN - Epoch:%d LR:%.2e Loss:%.2e" % (epoch + 1, trainer.learning_rate, trainloss / n))
 
     # save model
     if ((epoch + 1) % (config.TRAIN.end_epoch / 5) == 0 or epoch == 0):
@@ -120,7 +96,6 @@ def TestNet(net, test_data, loss, avg_metric, xyz_metric, mean3d, std3d, config,
     # nJoints = config.NETWORK.nJoints
     TestLoss, n = [0] * len(ctx), 0
 
-    begintime = time.time()
     for batch_i, batch in enumerate(test_data):
         # get data
         data = gluon.utils.split_and_load(batch.data[0], ctx_list=ctx, batch_axis=0)
@@ -146,10 +121,8 @@ def TestNet(net, test_data, loss, avg_metric, xyz_metric, mean3d, std3d, config,
 
         n += batch.data[0].shape[0]
 
-    endtime = time.time()
-
     # calc error
-    MPJPE = avg_metric.get()[-1].sum(axis=0) / 17
+    MPJPE  = avg_metric.get()[-1].sum(axis=0) / 17
     jntErr = avg_metric.get()[-1]
     xyzErr = xyz_metric.get()[-1]
 
@@ -157,6 +130,4 @@ def TestNet(net, test_data, loss, avg_metric, xyz_metric, mean3d, std3d, config,
     TestLoss = sum([item.sum().asscalar() for item in TestLoss])
     Losses = TestLoss / n
 
-    Time = endtime - begintime
-
-    return [DBsize, Losses, Time, MPJPE, xyzErr, jntErr]
+    return [DBsize, Losses, MPJPE, xyzErr, jntErr]

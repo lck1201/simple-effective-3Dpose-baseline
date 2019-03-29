@@ -1,6 +1,30 @@
 import yaml
-from easydict import EasyDict as edict
 import mxnet
+import argparse
+from easydict import EasyDict as edict
+
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--gpu', help='number of GPUs to use', required=True, default='0', type=str)
+    parser.add_argument('--root', help='/path/to/code/root/', required=True,
+                        default='/home/chuankang/code/simple-effective-3Dpose-baseline/', type=str)
+    parser.add_argument('--dataset', help='/path/to/your/dataset/root/', required=True,
+                        default='/home/chuankang/HardDrive4T/data_chuankang/hm36/', type=str)
+    parser.add_argument('--model', help='/path/to/your/model/, to specify only when test', type=str)
+    parser.add_argument('--debug', help='debug mode', default=False, type=str2bool)
+    args, rest = parser.parse_known_args()
+    return args
+
+s_args = parse_args()
+
 
 config = edict()
 
@@ -41,8 +65,8 @@ config.DATASET.dbname = ['hm36']
 config.DATASET.train_image_set = ['train']
 config.DATASET.valid_image_set = ['valid']
 config.DATASET.test_image_set  = ['test']
-config.DATASET.root_path = ['/home/chuankang/code/simple-effective-3Dpose-baseline/']
-config.DATASET.dataset_path = ['/home/chuankang/HardDrive4T/data_chuankang/hm36/']
+config.DATASET.root_path = []
+config.DATASET.dataset_path = []
 config.DATASET.sigma = 0
 
 # test-related config
@@ -72,6 +96,13 @@ def gen_config(config_file):
 
     with open(config_file, 'w') as f:
         yaml.dump(dict(cfg), f, default_flow_style=False)
+
+def update_config_from_args(config, args):
+    config.DEBUG = args.debug
+    config.DATASET.root_path = [args.root]
+    config.DATASET.dataset_path = [args.dataset]
+
+    return config
 
 if __name__ == '__main__':
     import sys

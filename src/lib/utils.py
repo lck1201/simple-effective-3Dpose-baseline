@@ -95,7 +95,6 @@ def create_logger(cfg):
 def LogResult(logger, config, results):
     DBsize = [item[0] for item in results]
     Loss   = [item[1] for item in results]
-    Time   = [item[2] for item in results]
     MPJPE  = [item[3] for item in results]
     XYZErr = [item[4] for item in results]
     JntErr = [item[5] for item in results]
@@ -104,7 +103,7 @@ def LogResult(logger, config, results):
     t_xyz = np.zeros(3)
     t_jnt = np.zeros(16) if not config.TEST.isPA else np.zeros(17)
     logger.info("Procrustes Analysis:", config.TEST.isPA)
-    for act, size, ls, t, err, xyz_err, jnt_e  in zip(HM_act_idx, DBsize, Loss, Time, MPJPE, XYZErr, JntErr):
+    for act, size, ls, t, err, xyz_err, jnt_e  in zip(HM_act_idx, DBsize, Loss, MPJPE, XYZErr, JntErr):
         t_error += size * err
         t_xyz   += size * xyz_err
         t_jnt   += size * jnt_e
@@ -112,7 +111,7 @@ def LogResult(logger, config, results):
         logger.info("=========================================")
         logger.info("For action          : %02d"%act)
         logger.info("Test Data Size      : %d"%size)
-        logger.info("Single Forward Time : %.2f ms"% (1000*t/size))
+        # logger.info("Single Forward Time : %.2f ms"% (1000*t/size))
         logger.info("Test Loss           : %.3e"%(ls))
         logger.info("MPJPE(17j)          : %.2f"%err)
         logger.info("X Y Z               : {}".format(" ".join(['%.1f'%x for x in xyz_err])))
