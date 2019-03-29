@@ -35,8 +35,8 @@ My best result is **46.2mm**(no augment is used), slightly higher than 45.5mm re
 
 ![Protocol1_Joint_Error](https://github.com/JimmySuen/Pose2DTo3D/blob/master/Baseline/doc/Protocol1_Action_error.png)
 
-![Figure_1-1](https://github.com/JimmySuen/Pose2DTo3D/blob/master/Baseline/doc/Figure_1-1.png)
+![Figure1](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure1.png)
 
-![Figure_1-5](https://github.com/JimmySuen/Pose2DTo3D/blob/master/Baseline/doc/Figure_1-5.png)
+![Figure2](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure2.png)
 
-![Figure_1-9](https://github.com/JimmySuen/Pose2DTo3D/blob/master/Baseline/doc/Figure_1-9.png)
+![Figure3](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure3.png)
