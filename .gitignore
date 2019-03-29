@@ -103,3 +103,4 @@ venv.bak/
 .mypy_cache/
 
 *.xml
+.idea/
