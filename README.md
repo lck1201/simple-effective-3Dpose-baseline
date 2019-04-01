@@ -3,13 +3,15 @@
 My own Gluon reimplement of [A simple yet effective baseline for 3D human pose estimation](https://arxiv.org/abs/1705.03098)</br>
 Here is the [original implementation](https://github.com/una-dinosauria/3d-pose-baseline)</br>
 
-- [ ] Todo: Provide trained model </br>
+Todo:
+- [ ] Provide trained model </br>
+- [ ] Provide results on 2D pose estimates as input
 
 ## Enviroments
 python3.7</br>
 mxnet-cu90 1.4.0</br>
 CUDA 9.0
-
+ 
 ## Dependency
 ``` 
 pip install pyyaml
@@ -29,7 +31,7 @@ usage: train.py/test.py [-h] --gpu GPU --root ROOT --dataset DATASET [--model MO
 
 optional arguments:
   -h, --help         show this help message and exit
-  --gpu GPU          number of GPUs to use
+  --gpu GPU          GPUs to use, e.g. 0,1,2,3
   --root ROOT        /path/to/code/root/
   --dataset DATASET  /path/to/your/dataset/root/
   --model MODEL      /path/to/your/model/, to specify only when test
