@@ -13,7 +13,7 @@ def str2bool(v):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--gpu', help='number of GPUs to use', required=True, default='0', type=str)
+    parser.add_argument('--gpu', help='GPUs to use, e.g. 0,1,2,3', required=True, default='0', type=str)
     parser.add_argument('--root', help='/path/to/code/root/', required=True,
                         default='/home/chuankang/code/simple-effective-3Dpose-baseline/', type=str)
     parser.add_argument('--dataset', help='/path/to/your/dataset/root/', required=True,
