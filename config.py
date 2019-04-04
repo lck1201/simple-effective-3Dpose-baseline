@@ -25,7 +25,6 @@ def parse_args():
 
 s_args = parse_args()
 
-
 config = edict()
 
 config.MXNET_VERSION = 'mxnet-version' + mxnet.__version__
@@ -98,6 +97,7 @@ def gen_config(config_file):
         yaml.dump(dict(cfg), f, default_flow_style=False)
 
 def update_config_from_args(config, args):
+    config.gpu = args.gpu
     config.DEBUG = args.debug
     config.DATASET.root_path = [args.root]
     config.DATASET.dataset_path = [args.dataset]
