@@ -59,10 +59,10 @@ PS: You can modify default configurations in config.py. Because it's a quite sim
 Since I don't have 2D pose estimate results on HM3.6M, I just experiment with 2D ground truth as input.
 My best result is **46.2mm**(no augment is used), slightly higher than 45.5mm reported by paper.</br>
 
-![Error](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Protocol1_Action_error.png)
+![Error](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Protocol1_Action_error.png)
 
-![Figure1](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure1.png)
+![Figure1](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Figure1.png)
 
-![Figure2](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure2.png)
+![Figure2](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Figure2.png)
 
-![Figure3](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/src/doc/Figure3.png)
+![Figure3](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Figure3.png)
