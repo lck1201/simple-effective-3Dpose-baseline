@@ -8,7 +8,7 @@ Todo:
 - [ ] Provide results on 2D pose estimates as input
 
 ## Enviroments
-python3.7</br>
+python 3.7</br>
 mxnet-cu90 1.4.0</br>
 CUDA 9.0
  
@@ -21,8 +21,19 @@ pip install easydict
 ``` 
 
 ## Dataset
-[Here](https://pan.baidu.com/s/1Qg4dH8PBXm8SzApI-uu0GA) (code: kfsm) to download the HM3.6M annotation
-
+1. [Baidu Disk](https://pan.baidu.com/s/1Qg4dH8PBXm8SzApI-uu0GA) (code: kfsm) or [Google Drive](https://drive.google.com/file/d/1wZynXUq91yECVRTFV8Tetvo271BXzxwI/view?usp=sharing) to download the HM3.6M annotation
+2. Unzip data under *data* folder, and organize like this
+```
+${PROJECT_ROOT}
+    `--data
+        `--annot
+            `--s_01_act_02_subact_01_ca_01
+            `--s_01_act_02_subact_01_ca_02
+            `-- ......
+            `-- ......
+            `-- ......
+            `--s_11_act_16_subact_02_ca_04            
+```
 
 ## How-to-use
 ```bash
@@ -32,17 +43,17 @@ usage: train.py/test.py [-h] --gpu GPU --root ROOT --dataset DATASET [--model MO
 optional arguments:
   -h, --help         show this help message and exit
   --gpu GPU          GPUs to use, e.g. 0,1,2,3
-  --root ROOT        /path/to/code/root/
+  --root ROOT        /path/to/project/root/
   --dataset DATASET  /path/to/your/dataset/root/
   --model MODEL      /path/to/your/model/, to specify only when test
   --debug DEBUG      debug mode
 ```
 
-**Train**: python train.py --data /datapath --root /project-path --gpu /gpu-to-use </br>
+**Train**: python train.py --root /project-root --gpu /gpu-to-use </br>
 
-**Test**:  python test.py --data /data-path --root /project-path --gpu /gpu-to-use --model /model-path </br>
+**Test**:  python test.py  --root /project-root --gpu /gpu-to-use --model /model-path </br>
 
-PS: You can modify default configurations in config.py.
+PS: You can modify default configurations in config.py. Because it's a quite simple system, not many hyperparameters need to be tuned.
 
 ## Results
 Since I don't have 2D pose estimate results on HM3.6M, I just experiment with 2D ground truth as input.

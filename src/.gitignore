@@ -1,8 +1,0 @@
-*.pkl
-*.log
-*.params
-*.txt
-.vscode/
-__pycache__/
-*/__pycache__/
-*/*/__pycache__/
