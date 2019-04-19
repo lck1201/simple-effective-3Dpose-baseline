@@ -4,7 +4,7 @@ My own Gluon reimplement of [A simple yet effective baseline for 3D human pose e
 Here is the [original implementation](https://github.com/una-dinosauria/3d-pose-baseline)</br>
 
 Todo:
-- [ ] Provide trained model </br>
+- [x] Provide trained model </br>
 - [ ] Provide results on 2D pose estimates as input
 
 ## Enviroments
@@ -36,6 +36,8 @@ ${PROJECT_ROOT}
 ```
 
 ## How-to-use
+You can download my trained model from [Google Drive](https://drive.google.com/file/d/1GvUCacxDBwrDsnWt1qcuhJNgtxcUWYeD/view?usp=sharing), which MPJPE is 44.9mm.
+
 ```bash
 usage: train.py/test.py [-h] --gpu GPU --root ROOT --dataset DATASET [--model MODEL]
                         [--debug DEBUG]
@@ -57,9 +59,14 @@ PS: You can modify default configurations in config.py. Because it's a quite sim
 
 ## Results
 Since I don't have 2D pose estimate results on HM3.6M, I just experiment with 2D ground truth as input.
-My best result is **46.2mm**(no augment is used), slightly higher than 45.5mm reported by paper.</br>
+My best result is **44.9mm**(no augment is used), slightly better than 45.5mm reported by paper.</br>
 
-![Error](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Protocol1_Action_error.png)
+| Method | Avg      |  Direct |   Discuss   |  Eating   | Greet  | Phone  | Photo | Pose  | Purch  | Sitting   | SittingD   | Smoke   |  Wait   | WaitD   | Walk   | WalkT   |
+| :-------- | --------: | --------:| :------: |--------: | --------:| :------: |--------: | --------:| :------: |--------: | --------:| ------: |--------: | --------:| ------: |------: |
+| My Result | 44.9  | 36.8 | 43.5 | 40.5 | 43.0 | 46.2 | 54.7 | 40.0 | 43.6 | 52.9 | 59.7 | 44.2 | 44.5 | 45.0 | 34.6 | 37.3 |
+| Paper     | 45.5  | 37.7 | 44.4 | 40.3 | 42.1 | 48.2 | 54.9 | 44.4 | 42.1 | 54.6 | 58.0 | 45.1 | 46.4 | 47.6 | 36.4 | 40.4 |
+
+
 
 ![Figure1](https://github.com/lck1201/simple-effective-3Dpose-baseline/blob/master/doc/Figure1.png)
 
